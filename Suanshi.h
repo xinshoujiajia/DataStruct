@@ -2,7 +2,6 @@
 #define SUANSHI_H
 
 #include "LinkList.h"
-#include "MathObject.h"
 
 typedef LinkList Suanshi;
 typedef LinkList Team;
@@ -13,11 +12,13 @@ typedef struct
 } TeamInfo;
 
 void SuanshiCreate(Suanshi *s);
-void SuanshiBuildFromstr(Suanshi s, char *str);
+void SuanshiBuildFromstr(Suanshi s, char **str);
 void SuanshiOutput(Suanshi s);
+void SuanshiHuajian(Suanshi s);
 void TeamCreate(Team *t, char opt);
-char *TeamBuildFromstr(Team t, char *str);
+void TeamBuildFromstr(Team t, char **str);
 void TeamOutput(Team t);
+void TeamChuLing(Team *t);
 char TeamGetOperate(Team t);
 
 #endif

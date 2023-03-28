@@ -112,6 +112,29 @@ void LinkListCreateFromArray(LinkList *l, void *array, size_t num, size_t size)
     *l = a;
 }
 
+void LinkListClear(LinkList l)
+{
+    Node *p = l->next;
+    while(p!=l)
+    {
+        free(p->data);
+        p = p->next;
+        free(p->pre);
+    }
+    l->next = l;
+    l->pre = l;
+    ((LinkListHeader *)l->data)->length = 0;
+}
+
+void LinkListDestory(LinkList *l)
+{
+    LinkListClear(*l);
+    free(LinkListGetHeaderInfo(*l));
+    free((*l)->data);
+    free(*l);
+    *l=NULL;
+}
+
 void LinkListInsert(LinkList l, size_t index, void *data)
 {
     Node *p = LinkListGetNode(l, index);
@@ -159,9 +182,8 @@ void LinkListInsertTail(LinkList l, void *data)
     ((LinkListHeader *)l->data)->length++;
 }
 
-void *LinkListRemove(LinkList l, size_t index)
+void *LinkListRemoveNode(LinkList l, Node *p)
 {
-    Node *p = LinkListGetNode(l, index);
     if (p == NULL)
     {
         return NULL;
@@ -174,35 +196,24 @@ void *LinkListRemove(LinkList l, size_t index)
     return data;
 }
 
+void *LinkListRemove(LinkList l, size_t index)
+{
+    return LinkListRemoveNode(l, LinkListGetNode(l, index));
+}
+
 void *LinkListRemoveFront(LinkList l)
 {
-    if (LinkListIsEmpty(l))
-    {
-        return NULL;
-    }
-    void *data = l->next->data;
-    Node *p = l->next->next;
-    free(l->next);
-    l->next = p;
-    p->pre = l;
-    free(p);
-    ((LinkListHeader *)l->data)->length--;
-    return data;
+    return LinkListRemoveNode(l, LinkListGetFront(l));
 }
 
 void *LinkListRemoveTail(LinkList l)
 {
-    if (LinkListIsEmpty(l))
-    {
-        return NULL;
-    }
-    void *data = l->pre->data;
-    Node *p = l->pre->pre;
-    free(l->pre);
-    l->pre = p;
-    p->next = l;
-    ((LinkListHeader *)l->data)->length--;
-    return data;
+    return LinkListRemoveNode(l, LinkListGetTail(l));
+}
+
+void LinkListEraseNode(LinkList l, Node* p)
+{
+    free(LinkListRemoveNode(l, p));
 }
 
 void LinkListErase(LinkList l, size_t index)

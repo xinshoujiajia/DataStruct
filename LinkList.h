@@ -33,14 +33,19 @@ Node *LinkListGetTail(LinkList l);
 void LinkListCreate(LinkList *l, size_t size);
 void LinkListCreateFromArray(LinkList *l, void *array, size_t num, size_t size);
 
+void LinkListClear(LinkList l);
+void LinkListDestory(LinkList *l);
+
 void LinkListInsertFront(LinkList l, void *data);
 void LinkListInsertTail(LinkList l, void *data);
 void LinkListInsert(LinkList l, size_t i, void *data);
 
+void *LinkListRemoveNode(LinkList l, Node *p);
 void *LinkListRemoveFront(LinkList l);
 void *LinkListRemoveTail(LinkList l);
 void *LinkListRemove(LinkList l, size_t i);
 
+void LinkListEraseNode(LinkList l, Node *p);
 void LinkListEraseFront(LinkList l);
 void LinkListEraseTail(LinkList l);
 void LinkListErase(LinkList l, size_t i);
