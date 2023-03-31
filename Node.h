@@ -4,20 +4,12 @@
 typedef struct Node Node;
 struct Node
 {
-	Node *parent;
-    Node *pre;
-    Node *next;
     void *data;
+    Node *prev;
+    Node *next;
 };
-
-void NodeSetParent(Node *n, Node *p);
-void NodeSetPrevious(Node *n, Node *p);
-void NodeSetNext(Node *n, Node *p);
-void NodeSetData(Node *n, void *data);
-
-Node *NodeGetParent(Node *n);
-Node *NodeGetPrevious(Node *n);
-Node *NodeGetNext(Node *n);
-void *NodeGetData(Node *n);
+#define NodeData(n) (n->data)
+#define NodePrev(n) (n->prev)
+#define NodeNext(n) (n->next)
 
 #endif
